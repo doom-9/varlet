@@ -58,7 +58,6 @@
   <app-type>{{ pack.event }}</app-type>
   <var-button type="success" @click="handleClick">{{ pack.click }}</var-button>
   <var-button type="success" @touchstart="handleTouchstart">{{ pack.touchstart }}</var-button>
-  <var-button type="success" @click="handleAutoLoadingClick" autoLoading>{{ pack.autoLoading }}</var-button>
 </template>
 
 <script>
@@ -87,14 +86,6 @@ export default {
       Snackbar.success(pack.value.touchstartSuccess)
     }
 
-    const handleAutoLoadingClick = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve()
-        }, 2000)
-      })
-    }
-
     watchLang(use)
     watchDarkMode(dark)
 
@@ -112,7 +103,6 @@ export default {
       pack,
       handleClick,
       handleTouchstart,
-      handleAutoLoadingClick,
     }
   },
 }

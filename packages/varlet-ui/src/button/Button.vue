@@ -37,7 +37,7 @@
 <script lang="ts">
 import Ripple from '../ripple'
 import VarLoading from '../loading'
-import { defineComponent, ref, toRef } from 'vue'
+import { defineComponent } from 'vue'
 import { props } from './props'
 
 export default defineComponent({
@@ -48,44 +48,29 @@ export default defineComponent({
   directives: { Ripple },
   props,
   setup(props) {
-    let loadingRef = props.autoLoading ? ref(false) : toRef(props, 'loading')
-
     const handleClick = (e: Event) => {
-      const { disabled, onClick, autoLoading } = props
+      const { loading, disabled, onClick } = props
 
-      if (loadingRef.value || disabled) {
+      if (loading || disabled) {
         return
       }
 
-      const returnValue = onClick?.(e)
-      if (autoLoading && returnValue instanceof Promise) {
-        loadingRef.value = true
-        returnValue.finally(() => {
-          loadingRef.value = false
-        })
-      }
+      onClick?.(e)
     }
 
     const handleTouchstart = (e: Event) => {
-      const { disabled, onTouchstart, autoLoading } = props
+      const { loading, disabled, onTouchstart } = props
 
-      if (loadingRef.value || disabled) {
+      if (loading || disabled) {
         return
       }
 
-      const returnValue = onTouchstart?.(e)
-      if (autoLoading && returnValue instanceof Promise) {
-        loadingRef.value = true
-        returnValue.finally(() => {
-          loadingRef.value = false
-        })
-      }
+      onTouchstart?.(e)
     }
 
     return {
       handleClick,
       handleTouchstart,
-      loading: loadingRef,
     }
   },
 })
