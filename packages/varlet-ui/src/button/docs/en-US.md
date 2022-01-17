@@ -107,6 +107,7 @@ createApp().use(Button)
 ```html
 <var-button type="success" @click="handleClick">Click</var-button>
 <var-button type="success" @touchstart="handleTouchstart">Touchstart</var-button>
+<var-button type="success" @click="handleAutoLoadingClick" autoLoading>AutoLoading</var-button>
 ```
 
 ```js
@@ -122,9 +123,18 @@ export default {
       Snackbar.success('Touchstart Success')
     }
 
+    const handleAutoLoadingClick = () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve()
+        }, 2000)
+      })
+    }
+
     return {
       handleClick,
-      handleTouchstart
+      handleTouchstart,
+      handleAutoLoadingClick
     }
   }
 }
@@ -136,6 +146,7 @@ export default {
 
 | Prop | Description | Type | Default | 
 | --- | --- | --- | --- | 
+| `auto-loading` | Whether to automatically loading, Event callback function return a promise is required | _boolean_ | `false` |
 | `type` | Button type, Can be set to `default` `primary` `info` `success` `warning` `danger` | _string_ | `default` |
 | `size` | Button size, Can be set to `normal` `mini` `small` `large` | _string_ | `normal` |
 | `loading` | Loading status | _boolean_ | `false` |  
